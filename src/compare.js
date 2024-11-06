@@ -16,44 +16,6 @@ const InteractiveCropDroughtChart = () => {
 
   const crops = ['Bananas', 'Cocoa beans', 'Coffee, green', 'Maize (corn)', 'Olives', 'Potatoes', 'Rice', 'Soya beans', 'Wheat'];
 
-  const loadData = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      createWorldMap(geoJsonData, []);
-
-      const [cropDataResponse, droughtDataResponse] = await Promise.all([
-        d3.csv('/dataset/data_yy.csv'),
-        d3.csv('/dataset/filtered_drought_data.csv')
-      ]);
-
-      const processedCropData = cropDataResponse.map(d => ({
-        ...d,
-        Value: d.Value ? parseFloat(d.Value.replace(/%/g, "").replace(/,/g, "")) : 0,
-        Year: parseInt(d.Year)
-      }));
-      setCropData(processedCropData);
-
-      const processedDroughtData = droughtDataResponse.map(d => ({
-        ...d,
-        damages: d.damages ? parseFloat(d.damages) : 0,
-        Year: parseInt(d.Year)
-      }));
-      setDroughtData(processedDroughtData);
-
-      createWorldMap(geoJsonData, processedCropData);
-      updateLineChart('India', processedCropData, processedDroughtData);
-
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error loading data:", error);
-      setIsLoading(false);
-    }
-  }, [createWorldMap, updateLineChart]);
-
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
-
   const createWorldMap = useCallback((geoJsonData, data) => {
     if (!mapSvgRef.current) return;
 
@@ -221,6 +183,46 @@ const InteractiveCropDroughtChart = () => {
     }
   }, [selectedCrop, selectedCountry, updateLineChart, isLoading]);
 
+
+  const loadData = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      createWorldMap(geoJsonData, []);
+
+      const [cropDataResponse, droughtDataResponse] = await Promise.all([
+        d3.csv('/dataset/data_yy.csv'),
+        d3.csv('/dataset/filtered_drought_data.csv')
+      ]);
+
+      const processedCropData = cropDataResponse.map(d => ({
+        ...d,
+        Value: d.Value ? parseFloat(d.Value.replace(/%/g, "").replace(/,/g, "")) : 0,
+        Year: parseInt(d.Year)
+      }));
+      setCropData(processedCropData);
+
+      const processedDroughtData = droughtDataResponse.map(d => ({
+        ...d,
+        damages: d.damages ? parseFloat(d.damages) : 0,
+        Year: parseInt(d.Year)
+      }));
+      setDroughtData(processedDroughtData);
+
+      createWorldMap(geoJsonData, processedCropData);
+      updateLineChart('India', processedCropData, processedDroughtData);
+
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error loading data:", error);
+      setIsLoading(false);
+    }
+  }, [createWorldMap, updateLineChart]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  
   return (
     <div ref={containerRef} className="w-full p-4">
       <div className="mb-4">
