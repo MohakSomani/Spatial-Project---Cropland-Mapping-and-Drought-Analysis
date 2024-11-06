@@ -1,0 +1,53 @@
+/* Navbar container */
+.navbar {
+    background-color: #1f1f1f; /* Dark background */
+    color: #e0e0e0; /* Light text color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+    padding: 0 16px;
+  }
+  
+  /* Navbar wrapper for content alignment */
+  .navbar-content {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+  }
+  
+  /* Navbar title */
+  .navbar-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff; /* Bright text for title */
+  }
+  
+  /* Navbar button styles */
+  .navbar-buttons {
+    display: flex;
+    gap: 24px;
+  }
+  
+  .navbar-button {
+    color: #e0e0e0;
+    background-color: transparent;
+    padding: 8px 16px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-bottom: 3px solid transparent; /* Add bottom border for alignment */
+  }
+  
+  .navbar-button:hover {
+    background-color: #333333; /* Dark gray on hover */
+    color: #ffffff; /* White text on hover */
+  }
+  
+  .navbar-button.active {
+    background-color: #007acc; /* Highlight color for active page */
+    color: #ffffff;
+    border-bottom-color: #005f99; /* Darker shade of blue for active state */
+  }
+  
