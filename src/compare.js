@@ -48,7 +48,7 @@ const InteractiveCropDroughtChart = () => {
       console.error("Error loading data:", error);
       setIsLoading(false);
     }
-  }, []);
+  }, [createWorldMap, updateLineChart]);
 
   useEffect(() => {
     loadData();
